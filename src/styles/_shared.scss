@@ -1,0 +1,78 @@
+@import "./variable";
+
+body {
+  margin: 0;
+  font-size: $f-size;
+  font-family: -apple-system, BlinkMacSystemFont, "Gill Sans", "sans-serif","Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans",
+    "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #212529;
+}
+
+input {
+  text-indent: 10px;
+  border-radius: 3px;
+  border: solid 1px $c-text;
+  &:focus {
+    outline: none;
+  }
+}
+
+html::-webkit-scrollbar-thumb {
+  background: rgb(167, 161, 161);
+  border-radius: 5px;
+}
+html::-webkit-scrollbar {
+  width: 5px;
+}
+
+div::-webkit-scrollbar-thumb {
+  background: rgb(167, 161, 161);
+  border-radius: 5px;
+}
+div::-webkit-scrollbar {
+  width: 5px;
+}
+
+tbody::-webkit-scrollbar-thumb {
+  background: rgb(167, 161, 161);
+  border-radius: 5px;
+}
+tbody::-webkit-scrollbar {
+  width: 5px;
+}
+
+thead::-webkit-scrollbar-thumb {
+  background: rgb(167, 161, 161);
+  border-radius: 5px;
+}
+thead::-webkit-scrollbar {
+  width: 5px;
+}
+
+p{
+  margin-top: 0;
+  margin-bottom: 0;
+  line-height: 1.5;
+}
+
+.row {
+  margin: 0px;
+  margin-bottom: 0px;
+  width: 100%;
+}
+.no-padding{
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.right{
+  text-align: right;
+}
+.center{
+  text-align: center;
+}
+.pointer{
+  cursor: pointer;
+}
