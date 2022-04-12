@@ -3,22 +3,7 @@ import "./styles.scss";
 
 function Todo() {
 	const initTodo = [
-		{
-			item: "abc",
-			status: "New",
-		},
-		{
-			item: "abcc",
-			status: "New",
-		},
-		{
-			item: "abcd",
-			status: "New",
-		},
-		{
-			item: "ab",
-			status: "New",
-		},
+		
 	];
 	const [todo, setTodo] = useState(initTodo);
 	const [input, setInput] = useState({
@@ -27,7 +12,6 @@ function Todo() {
 		inputSearch: "",
 		selectSearch: "",
 	});
-
 	const handleInput = (e) => {
 		const { value, name } = e.target;
 		setInput({
@@ -35,26 +19,32 @@ function Todo() {
 			[name]: value,
 		});
 	};
+	const [initId,setId]= useState(1)
 	const handleSubmit = () => {
 		let newItem = input.inputItem;
 		let newTodo = JSON.parse(JSON.stringify(todo));
 		newTodo.push({
+			id: initId,
 			item: newItem,
 			status: "New",
 		});
+		setId(initId+1)
 		setTodo(newTodo);
 		input.inputItem = "";
+		console.log(todo);
 	};
-	const handleDelete = (index) => {
-		let newTodo = JSON.parse(JSON.stringify(todo));
-		newTodo.splice(index, 1);
+	const handleDelete = (id) => {
+		let newTodo = JSON.parse(JSON.stringify(filters));
+		let index =newTodo.findIndex(e=> e.id===id);
+		newTodo.splice(index , 1);
 		setTodo(newTodo);
 	};
 	const [isOpenEdit, setIsOpenEdit] = useState(false);
 	const handleCloseEdit = () => {
 		setIsOpenEdit(!isOpenEdit);
 	};
-	const handleEdit = (index) => {
+	const handleEdit = (id) => {
+		let index =todo.findIndex(e=> e.id===id);
 		setInput({
 			...input,
 			inputEdit: todo[index].item,
@@ -69,10 +59,11 @@ function Todo() {
 		setTodo(newTodo);
 		setIsOpenEdit(!isOpenEdit);
 	};
-	const handleChangeStatus = (index, status) => {
-		let newTodo = JSON.parse(JSON.stringify(todo));
+	const handleChangeStatus = (id, status) => {
+		let newTodo = [...todo];
+		let index = newTodo.findIndex(e => e.id === id);
 		newTodo[index].status = status;
-		setTodo(newTodo);
+		setFilter(newTodo);
 	};
 	const [filters, setFilter] = useState(todo)
 	useEffect(() => {
@@ -119,27 +110,28 @@ function Todo() {
 					<table className="task__table table">
 						<thead>
 							<tr>
+								<th>Id</th>
 								<th>Items </th>
 								<th>Status</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							
 							{filters.filter((e) => {
 								return (
 									e.item.includes(input.inputSearch) && e.status.includes(input.selectSearch)
 								)
 								})
-							.map((element, index) => (
+								.map((element, index) => (
 								<tr key={index} className={element.status}>
+									<td>{element.id}</td>
 									<td>{element.item}</td>
 									<td>{element.status}</td>
 									<td>
 										<button
 											className="btn btn--primary mr-15 pointer"
 											onClick={() =>
-												handleChangeStatus(index, "New")
+												handleChangeStatus(element.id, "New")
 											}
 										>
 											New
@@ -148,7 +140,7 @@ function Todo() {
 											className="btn btn--primary mr-15 pointer"
 											onClick={() =>
 												handleChangeStatus(
-													index,
+													element.id,
 													"Depending"
 												)
 											}
@@ -159,7 +151,7 @@ function Todo() {
 											className="btn btn--primary mr-15 pointer"
 											onClick={() =>
 												handleChangeStatus(
-													index,
+													element.id,
 													"Completed"
 												)
 											}
@@ -168,13 +160,13 @@ function Todo() {
 										</button>
 										<button
 											className="btn btn--primary mr-15 pointer"
-											onClick={() => handleEdit(index)}
+											onClick={() => handleEdit(element.id)}
 										>
 											Edit
 										</button>
 										<button
 											className="btn btn--secondary mr-15 pointer"
-											onClick={() => handleDelete(index)}
+											onClick={() => handleDelete(element.id)}
 										>
 											Delete
 										</button>
@@ -187,56 +179,26 @@ function Todo() {
 			{isOpenEdit && (
 				<>
 					<div className="todo__add add">
-					<div className="add__title">Edit a task</div>
-					<div className="add__content content">
-						<p className="content__title">Edit input</p>
-						<input
-							className="content__input-todo"
-							placeholder="What do you wants to do?"
-							onChange={handleInput}
-							name="inputEdit"
-							value={input.inputEdit}
-						></input>
-						<button className="content_submit btn btn--primary pointer" onClick={handleSaveEdit}>
-							Save Change
+						<div className="add__title">Edit a task</div>
+						<div className="add__content content">
+							<p className="content__title">Edit input</p>
+							<input
+								className="content__input-todo"
+								placeholder="What do you wants to do?"
+								onChange={handleInput}
+								name="inputEdit"
+								value={input.inputEdit}
+							></input>
+							<button className="content_submit btn btn--primary pointer" onClick={handleSaveEdit}>
+								Save Change
+							</button>
+							<button className="content_submit btn btn--primary pointer" onClick={handleCloseEdit}>
+										Close
 						</button>
-						<button className="content_submit btn btn--primary pointer" onClick={handleCloseEdit}>
-								Close
-						</button>
+						</div>
 					</div>
-			</div>
 				</>
 
-
-
-
-
-				/* <table className="table-edit">
-					<tbody>
-						<tr className="edit-title">
-							<td rowSpan={3}>Edit:</td>
-							
-						</tr>
-						
-						<tr className="edit-content">
-							<td>
-								<input
-									onChange={handleInput}
-									name="inputEdit"
-									value={input.inputEdit}
-								/>
-							</td>
-							<td>
-								<button onClick={handleSaveEdit}>
-									Save Change
-								</button>
-							</td>
-							<td>
-								<button onClick={handleCloseEdit}>Close</button>
-							</td>
-						</tr>
-					</tbody>
-				</table> */
 			)}
 		</div>
 	);
