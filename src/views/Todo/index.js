@@ -1,4 +1,5 @@
 import React, {useState } from "react";
+import AddTask from "./component/AddTask";
 import "./styles.scss";
 
 function Todo() {
@@ -6,7 +7,6 @@ function Todo() {
 	];
 	const [todo, setTodo] = useState(initTodo);
 	const [input, setInput] = useState({
-		inputItem: "",
 		inputEdit: "",
 		inputSearch: "",
 		selectSearch: "",
@@ -19,8 +19,8 @@ function Todo() {
 		});
 	};
 	const [initId,setId]= useState(1)
-	const handleSubmit = () => {
-		let newItem = input.inputItem;
+	const handleSubmit = (a) => {
+		let newItem = a.inputItem;
 		let newTodo = JSON.parse(JSON.stringify(todo));
 		newTodo.push({
 			id: initId,
@@ -29,7 +29,7 @@ function Todo() {
 		});
 		setId(initId+1)
 		setTodo(newTodo);
-		input.inputItem = "";
+		a.inputItem = "";
 	};
 	const handleDelete = (id) => {
 		let newTodo = JSON.parse(JSON.stringify(todo));
@@ -68,26 +68,7 @@ function Todo() {
 			<div className="todo__title">Todos</div>
 			<div className="todo__add add">
 				<div className="add__title">Add a task</div>
-				<div className="add__content content">
-					<p className="content__title">item</p>
-					<input
-						className="content__input-todo"
-						placeholder="What do you wants to do?"
-						name="inputItem"
-						onChange={handleInput}
-						value={input.inputItem}
-					></input>
-					
-					<p className="content__note">
-						Enter what you want to procastinate{" "}
-					</p>
-					<button
-						className="content_submit btn btn--primary pointer"
-						onClick={handleSubmit}
-					>
-						Submit
-					</button>
-				</div>
+				<AddTask handleSubmit={handleSubmit}/>
 			</div>
 			<div className="todo__task task">
 				<div className="task__title">
