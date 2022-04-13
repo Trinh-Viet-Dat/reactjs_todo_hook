@@ -1,4 +1,5 @@
 import React, {useState } from "react";
+import AddTask from "./component/AddTask";
 
 import "./styles.scss";
 
@@ -67,29 +68,7 @@ function Todo() {
 	return (
 		<div className="todo">
 			<div className="todo__title">Todos</div>
-			<div className="todo__add add">
-				<div className="add__title">Add a task</div>
-				<div className="add__content content">
-					<p className="content__title">item</p>
-					<input
-						className="content__input-todo"
-						placeholder="What do you wants to do?"
-						name="inputItem"
-						onChange={handleInput}
-						value={input.inputItem}
-					></input>
-					
-					<p className="content__note">
-						Enter what you want to procastinate{" "}
-					</p>
-					<button
-						className="content_submit btn btn--primary pointer"
-						onClick={handleSubmit}
-					>
-						Submit
-					</button>
-				</div>
-			</div>
+			<AddTask handleSubmit={handleSubmit}/>
 			<div className="todo__task task">
 				<div className="task__title">
 					<p>Task</p>
