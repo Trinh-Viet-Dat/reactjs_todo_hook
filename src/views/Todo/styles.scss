@@ -17,6 +17,9 @@
         font-weight: 600;
         background-color: #f8f8f8;
         border-bottom: 1px solid $c-border;
+        .inputSearch{
+            width: 100px;
+        }
     }
     &__content{
         padding: 15px;
@@ -71,13 +74,19 @@
         }
 }
 .table{
+    .action{
+        padding-left: 10vw;
+    }
+    .actions{
+        padding-left: 20vw;
+    }
     text-align: left;
     thead{
         th:nth-child(1){
-            width: 25vw;
+            width: 17vw;
         }
         th:nth-child(2){
-            width: 25vw;
+            width: 20vw;
         }
     }
 }
@@ -92,7 +101,7 @@
 }
 .table-edit{
     .edit__title{
-        padding: 10px 15px;
+        padding: 1px 15px;
         font-weight: 600;
         background-color: #f8f8f8;
         border-bottom: 1px solid $c-border;
