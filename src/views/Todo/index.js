@@ -1,5 +1,6 @@
 import React, {useState } from "react";
 import AddTask from "./component/AddTask";
+import Task from "./component/Task";
 
 import "./styles.scss";
 
@@ -8,7 +9,6 @@ function Todo() {
 	];
 	const [todo, setTodo] = useState(initTodo);
 	const [input, setInput] = useState({
-		inputItem: "",
 		inputEdit: "",
 		inputSearch: "",
 		selectSearch: "",
@@ -21,8 +21,8 @@ function Todo() {
 		});
 	};
 	const [initId,setId]= useState(1)
-	const handleSubmit = () => {
-		let newItem = input.inputItem;
+	const handleSubmit = (e) => {
+		let newItem = e.inputItem;
 		let newTodo = JSON.parse(JSON.stringify(todo));
 		newTodo.push({
 			id: initId,
@@ -31,7 +31,7 @@ function Todo() {
 		});
 		setId(initId+1)
 		setTodo(newTodo);
-		input.inputItem = "";
+		e.inputItem = "";
 	};
 	const handleDelete = (id) => {
 		let newTodo = JSON.parse(JSON.stringify(todo));
@@ -69,89 +69,10 @@ function Todo() {
 		<div className="todo">
 			<div className="todo__title">Todos</div>
 			<AddTask handleSubmit={handleSubmit}/>
-			<div className="todo__task task">
-				<div className="task__title">
-					<p>Task</p>
-					<div className="inputSearch">
-						<input value={input.inputSearch} name="inputSearch" onChange={handleInput} />
-						<select name="selectSearch" value={input.selectSearch} onChange={handleInput}>
-						<option value="" >All</option>
-							<option value="New">New</option>
-							<option value="Depending">Depending</option>
-							<option value="Completed">Completed</option>		
-						</select>
-					</div>
-				</div>
-				<div className="task__content content">
-					<table className="task__table table">
-						<thead>
-							<tr>
-								<th>Id</th>
-								<th>Items </th>
-								<th>Status</th>
-								<th className="actions">Action</th>
-							</tr>
-						</thead>
-						<tbody>
-							{todo.filter((e) => {
-								return (
-									e.item.includes(input.inputSearch) && e.status.includes(input.selectSearch)
-								)
-								})
-								.map((element, index) => (
-								<tr key={index} className={element.status}>
-									<td>{index+1}</td>
-									<td>{element.item}</td>
-									<td>{element.status}</td>
-									<td className="action">
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() =>
-												handleChangeStatus(element.id, "New")
-											}
-										>
-											New
-										</button>
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() =>
-												handleChangeStatus(
-													element.id,
-													"Depending"
-												)
-											}
-										>
-											Depending
-										</button>
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() =>
-												handleChangeStatus(
-													element.id,
-													"Completed"
-												)
-											}
-										>
-											Complete
-										</button>
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() => handleEdit(element.id)}
-										>
-											Edit
-										</button>
-										<button
-											className="btn btn--secondary mr-15 pointer"
-											onClick={() => handleDelete(element.id)}
-										>
-											Delete
-										</button>
-									</td>
-								</tr>))}
-						</tbody>
-					</table>
-				</div>
-			</div>
+			<Task
+				handleChangeStatus={handleChangeStatus}
+				handleDelete={handleDelete}
+				handleEdit={handleEdit}/>
 			{isOpenEdit && (
 				<>
 					<div class="modal" tabindex="-1" >
