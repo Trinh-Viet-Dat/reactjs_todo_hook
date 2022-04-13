@@ -1,5 +1,4 @@
-import React, {useState } from "react";
-
+import React, { useState } from "react";
 import "./styles.scss";
 
 function Todo() {
@@ -120,39 +119,22 @@ function Todo() {
 								)
 								})
 								.map((element, index) => (
-								<tr key={index} className={element.status}>
-									<td>{index+1}</td>
-									<td>{element.item}</td>
-									<td>{element.status}</td>
-									<td className="action">
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() =>
-												handleChangeStatus(element.id, "New")
-											}
-										>
-											New
-										</button>
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() =>
-												handleChangeStatus(
-													element.id,
-													"Depending"
-												)
-											}
-										>
-											Depending
-										</button>
-										<button
-											className="btn btn--primary mr-15 pointer"
-											onClick={() =>
-												handleChangeStatus(
-													element.id,
-													"Completed"
-												)
-											}
-										>
+									<tr key={index} className={element.status}>
+										<td>{index+1 }</td>
+										<td>{element.item}</td>
+										<td>{element.status}</td>
+										<td className="action">
+											<button
+												className="btn btn--primary mr-15 pointer"
+												onClick={() => handleChangeStatus(element.id, "New")}>
+												New
+											</button>
+											<button className="btn btn--primary mr-15 pointer"
+												onClick={() =>handleChangeStatus(element.id,"Depending")}>
+												Depending
+											</button>
+										<button className="btn btn--primary mr-15 pointer"
+											onClick={() =>handleChangeStatus(element.id,"Completed")}>
 											Complete
 										</button>
 										<button
