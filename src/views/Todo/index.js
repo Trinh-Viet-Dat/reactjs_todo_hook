@@ -6,7 +6,22 @@ import Task from "./component/Task";
 import "./styles.scss";
 
 function Todo() {
-	const initTodo = [	
+	const initTodo = [
+		{
+			id:1,
+			item: "sdvscd",
+			status:"New",
+		},
+		{
+			id:2,
+			item: "ssa",
+			status:"New",
+		},
+		{
+			id:3,
+			item: "yj",
+			status:"New",
+		},
 	];
 	const [todo, setTodo] = useState(initTodo);
 	const [input, setInput] = useState({
@@ -14,7 +29,7 @@ function Todo() {
 		inputSearch: "",
 		selectSearch: "",
 	});
-	const [initId,setId]= useState(1)
+	const [initId,setId]= useState(todo.length+2)
 	const handleSubmit = (e) => {
 		let newItem = e.inputItem;
 		let newTodo = JSON.parse(JSON.stringify(todo));
@@ -26,6 +41,7 @@ function Todo() {
 		setId(initId+1)
 		setTodo(newTodo);
 		e.inputItem = "";
+		console.log(todo);
 	};
 	const handleDelete = (id) => {
 		let newTodo = JSON.parse(JSON.stringify(todo));

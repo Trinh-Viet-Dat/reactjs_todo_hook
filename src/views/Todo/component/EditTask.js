@@ -1,20 +1,25 @@
 import React, { useEffect, useState } from "react";
 
 function EditTask(props) {
-    const { isOpenEdit , inputEdits} = props
-    const [valueInput,setValueInput]=useState("")
+    const { isOpenEdit, inputEdits } = props;
+    const [valueInput, setValueInput] = useState("")
+    
     useEffect(() => {
         setValueInput(inputEdits)
     },[inputEdits])
-	const handleInput = (e) => {
-		setValueInput(e.target.value)
-	};
-    const handleSaveEdit = () => {
-        props.handleSaveEdit(valueInput)
+    
+    const handleInput = (e) => {
+        setValueInput(e.target.value)
     }
+
     const handleCloseEdit = () => {
         props.handleCloseEdit()
     }
+
+    const handleSaveEdit = () => {
+        props.handleSaveEdit(valueInput)
+    }
+    
     return (
         isOpenEdit &&(
             <>
