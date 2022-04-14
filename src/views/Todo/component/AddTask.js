@@ -12,7 +12,7 @@ function AddTask(props) {
 		});
     };
     const handleSubmit = () => {
-        props.handleSubmit(input)
+        props.handleSubmit(input.inputItem)
     }
     return (
         <div className="todo__add add">

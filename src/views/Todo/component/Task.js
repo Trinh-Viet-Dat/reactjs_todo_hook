@@ -42,30 +42,30 @@ function Task(props) {
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Items </th>
+                        <th>Name </th>
                         <th>Status</th>
                         <th className="actions">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {todo?.filter((e) => {
+                    {todo.filter((e) => {
                         return (
-                            e.item.includes(input.inputSearch) && e.status.includes(input.selectSearch)
+                            e.name.toLowerCase().includes(input.inputSearch) && e.status.includes(input.selectSearch)
                         )
                         })
                         .map((element, index) => (
                         <tr key={index} className={element.status}>
-                            <td>{index+1}</td>
-                            <td>{element.item}</td>
+                            <td>{element.id}</td>
+                            <td>{element.name}</td>
                             <td>{element.status}</td>
                             <td className="action">
-                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id, "New")}>
+                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id, "new")}>
                                     New
                                 </button>
-                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"Depending")}>
+                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"depending")}>
                                     Depending
                                 </button>
-                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"Completed")}>
+                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"completed")}>
                                     Complete
                                 </button>
                                 <button className="btn btn--primary mr-15 pointer" onClick={() => handleEdit(element.id)}>

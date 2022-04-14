@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 
 function EditTask(props) {
-    const { isOpenEdit, inputEdits } = props;
+    const { isOpenEdit, initValueEdit } = props;
     const [valueInput, setValueInput] = useState("")
     
     useEffect(() => {
-        setValueInput(inputEdits)
-    },[inputEdits])
+        setValueInput(initValueEdit)
+    },[initValueEdit])
     
     const handleInput = (e) => {
         setValueInput(e.target.value)

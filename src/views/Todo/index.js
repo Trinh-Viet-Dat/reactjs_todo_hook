@@ -1,4 +1,5 @@
-import React, {useState } from "react";
+import axios from "axios";
+import React, {useEffect, useState } from "react";
 import AddTask from "./component/AddTask";
 import EditTask from "./component/EditTask";
 import Task from "./component/Task";
@@ -6,74 +7,51 @@ import Task from "./component/Task";
 import "./styles.scss";
 
 function Todo() {
-	const initTodo = [
-		{
-			id:1,
-			item: "sdvscd",
-			status:"New",
-		},
-		{
-			id:2,
-			item: "ssa",
-			status:"New",
-		},
-		{
-			id:3,
-			item: "yj",
-			status:"New",
-		},
-	];
-	const [todo, setTodo] = useState(initTodo);
+	const [todo, setTodo] = useState([]);
+	useEffect(() => {
+		axios.get(`https://api-fake-todo.herokuapp.com/api/tasks`).then(res => {
+			setTodo(res.data)
+		}).catch(error=> console.log("error"))
+	})
 	const [input, setInput] = useState({
-		inputEdit: "",
 		inputSearch: "",
 		selectSearch: "",
 	});
-	const [initId,setId]= useState(todo.length+2)
-	const handleSubmit = (e) => {
-		let newItem = e.inputItem;
-		let newTodo = JSON.parse(JSON.stringify(todo));
-		newTodo.push({
-			id: initId,
-			item: newItem,
-			status: "New",
-		});
-		setId(initId+1)
-		setTodo(newTodo);
-		e.inputItem = "";
-		console.log(todo);
+	const handleSubmit = (value) => {
+		const newItem = {
+			name: value,
+			status: "new",
+		}
+		axios.post(`https://api-fake-todo.herokuapp.com/api/tasks`, newItem)
 	};
 	const handleDelete = (id) => {
-		let newTodo = JSON.parse(JSON.stringify(todo));
-		let index =newTodo.findIndex(e=> e.id===id);
-		newTodo.splice(index , 1);
-		setTodo(newTodo);
+		axios.delete(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`).then(res=> console.log(res.data))
 	};
 	const [isOpenEdit, setIsOpenEdit] = useState(false);
 	const handleCloseEdit = () => {
 		setIsOpenEdit(!isOpenEdit);
 	};
+	const [initValueEdit, setInitValueEdit] = useState("")
+	const [idEdit,setIdEdit] = useState("")
 	const handleEdit = (id) => {
-		let index =todo.findIndex(e=> e.id===id);
-		setInput({
-			...input,
-			inputEdit: todo[index].item,
-			indexEdit: index,
-		});
+		axios.get(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`).then(res => {
+		setInitValueEdit(res.data.name)
+		})
+		setIdEdit(id)
 		setIsOpenEdit(!isOpenEdit);
 	};
 	const handleSaveEdit = (valueInput) => {
-		let newTodo = JSON.parse(JSON.stringify(todo));
-		let newIndex = input.indexEdit;
-		newTodo[newIndex].item = valueInput;
-		setTodo(newTodo);
-		setIsOpenEdit(!isOpenEdit);
+		let editItem = {
+			name: valueInput
+		}
+		axios.patch(`https://api-fake-todo.herokuapp.com/api/tasks/${idEdit}`, editItem)
+		setIsOpenEdit(!isOpenEdit)
 	};
-	const handleChangeStatus = (id, status) => {
-		let newTodo = [...todo];
-		let index = newTodo.findIndex(e => e.id === id);
-		newTodo[index].status = status;
-		setTodo(newTodo);
+	const handleChangeStatus = (id, newStatus) => {
+		const changeItem = {
+			status: newStatus,
+		}
+		axios.patch(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`,changeItem).then(res=> console.log(res.data))
 	};
 	return (
 		<div className="todo">
@@ -87,7 +65,7 @@ function Todo() {
 			/>
 			<EditTask 
 				isOpenEdit={isOpenEdit}
-				inputEdits={input.inputEdit}
+				initValueEdit={initValueEdit}
 				handleSaveEdit={handleSaveEdit}
 				handleCloseEdit={handleCloseEdit}
 			/>
