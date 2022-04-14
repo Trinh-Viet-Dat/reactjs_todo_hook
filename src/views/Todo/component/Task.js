@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 function Task(props) {
-    const { newTodo } = props;
+    const { todo } = props;
     const [input, setInput] = useState({
 		inputEdit: "",
 		inputSearch: "",
@@ -48,7 +48,7 @@ function Task(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {newTodo?.filter((e) => {
+                    {todo?.filter((e) => {
                         return (
                             e.item.includes(input.inputSearch) && e.status.includes(input.selectSearch)
                         )
