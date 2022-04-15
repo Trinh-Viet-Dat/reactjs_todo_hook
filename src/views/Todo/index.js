@@ -11,12 +11,8 @@ function Todo() {
 	useEffect(() => {
 		axios.get(`https://api-fake-todo.herokuapp.com/api/tasks`).then(res => {
 			setTodo(res.data)
-		}).catch(error=> console.log("error"))
+		})
 	})
-	const [input, setInput] = useState({
-		inputSearch: "",
-		selectSearch: "",
-	});
 	const handleSubmit = (value) => {
 		const newItem = {
 			name: value,
@@ -35,7 +31,7 @@ function Todo() {
 	const [idEdit,setIdEdit] = useState("")
 	const handleEdit = (id) => {
 		axios.get(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`).then(res => {
-		setInitValueEdit(res.data.name)
+			setInitValueEdit(res.data.name)
 		})
 		setIdEdit(id)
 		setIsOpenEdit(!isOpenEdit);

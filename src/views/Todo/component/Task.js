@@ -65,7 +65,7 @@ function Task(props) {
                                 <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"depending")}>
                                     Depending
                                 </button>
-                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"completed")}>
+                                <button className="btn btn--primary mr-15 pointer" onClick={() =>handleChangeStatus(element.id,"complete")}>
                                     Complete
                                 </button>
                                 <button className="btn btn--primary mr-15 pointer" onClick={() => handleEdit(element.id)}>
