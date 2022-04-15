@@ -26,14 +26,14 @@ function Task(props) {
     return (
         <div className="todo__task task">
         <div className="task__title">
-            <p>Task</p>
-            <div className="inputSearch">
-                <input value={input.inputSearch} name="inputSearch" onChange={handleInput} />
-                <select name="selectSearch" value={input.selectSearch} onChange={handleInput}>
+            <div><p>Task</p></div>
+            <div className="inputSearch" style={{paddingLeft : "65%"}}>
+                <input className="input" value={input.inputSearch} name="inputSearch" onChange={handleInput} />
+                <select className="selectinput" name="selectSearch" value={input.selectSearch} onChange={handleInput}>
                 <option value="" >All</option>
-                    <option value="New">New</option>
-                    <option value="Depending">Depending</option>
-                    <option value="Completed">Completed</option>		
+                    <option value="new">New</option>
+                    <option value="depending">Depending</option>
+                    <option value="complete">Completed</option>		
                 </select>
             </div>
         </div>

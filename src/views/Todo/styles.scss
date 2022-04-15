@@ -18,7 +18,10 @@
         background-color: #f8f8f8;
         border-bottom: 1px solid $c-border;
         .inputSearch{
-            width: 100px;
+            width: 1000000px;
+            .input{
+                padding: 1px;
+            }
         }
     }
     &__content{
