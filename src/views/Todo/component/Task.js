@@ -78,8 +78,9 @@ function Task(props) {
                         </tr>))}
                 </tbody>
             </table>
+            </div>
+            
         </div>
-    </div>
     )
 }
 export default Task;

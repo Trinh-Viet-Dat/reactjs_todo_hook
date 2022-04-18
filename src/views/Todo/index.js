@@ -7,9 +7,10 @@ import Task from "./component/Task";
 import "./styles.scss";
 
 function Todo() {
+	const url = `https://api-fake-todo.herokuapp.com/api/tasks`;
 	const [todo, setTodo] = useState([]);
 	useEffect(() => {
-		axios.get(`https://api-fake-todo.herokuapp.com/api/tasks`).then(res => {
+		axios.get(url).then(res => {
 			setTodo(res.data)
 		})
 	})
@@ -18,10 +19,10 @@ function Todo() {
 			name: value,
 			status: "new",
 		}
-		axios.post(`https://api-fake-todo.herokuapp.com/api/tasks`, newItem)
+		axios.post(url, newItem)
 	};
 	const handleDelete = (id) => {
-		axios.delete(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`).then(res=> console.log(res.data))
+		axios.delete(`${url}/${id}`).then(res=> console.log(res.data))
 	};
 	const [isOpenEdit, setIsOpenEdit] = useState(false);
 	const handleCloseEdit = () => {
@@ -30,7 +31,7 @@ function Todo() {
 	const [initValueEdit, setInitValueEdit] = useState("")
 	const [idEdit,setIdEdit] = useState("")
 	const handleEdit = (id) => {
-		axios.get(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`).then(res => {
+		axios.get(`${url}/${id}`).then(res => {
 			setInitValueEdit(res.data.name)
 		})
 		setIdEdit(id)
@@ -40,15 +41,20 @@ function Todo() {
 		let editItem = {
 			name: valueInput
 		}
-		axios.patch(`https://api-fake-todo.herokuapp.com/api/tasks/${idEdit}`, editItem)
+		axios.patch(`${url}/${idEdit}`, editItem)
 		setIsOpenEdit(!isOpenEdit)
 	};
 	const handleChangeStatus = (id, newStatus) => {
 		const changeItem = {
 			status: newStatus,
 		}
-		axios.patch(`https://api-fake-todo.herokuapp.com/api/tasks/${id}`,changeItem).then(res=> console.log(res.data))
+		axios.patch(`${url}/${id}`,changeItem).then(res=> console.log(res.data))
 	};
+	const pagination = {
+		_limit: 3,
+		_page: 1,
+		_totalRows: 10,
+	}
 	return (
 		<div className="todo">
 			<div className="todo__title">Todos</div>
@@ -58,6 +64,7 @@ function Todo() {
 				handleDelete={handleDelete}
 				handleEdit={handleEdit}
 				todo={todo}	
+				pagination={pagination}
 			/>
 			<EditTask 
 				isOpenEdit={isOpenEdit}
